@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -9,7 +8,7 @@ import { Input } from '../ui/input'
 import { Plus, SendHorizonal } from 'lucide-react'
 import queryString from 'query-string'
 import axios from 'axios'
-import { useModal } from '../../hooks/use-modal-store'
+import { useModal } from '../hooks/use-modal-store'
 import EmojiPicker from '../emoji-picker'
 
 interface ChatInputProps {

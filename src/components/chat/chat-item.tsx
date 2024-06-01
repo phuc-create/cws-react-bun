@@ -1,12 +1,9 @@
-'use client'
-
 import { MEMBER_ROLE, member_tbl, profile_tbl } from '@prisma/client'
 import React, { useEffect, useState } from 'react'
 import UserAvatar from '../user-avatar'
 import { ActionTooltip } from '../action-tooltip'
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react'
-import Image from 'next/image'
-import { cn } from '../../lib/utils'
+import { cn } from '@/lib/utils'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,8 +12,8 @@ import { Button } from '../ui/button'
 import { Form, FormControl, FormField, FormItem } from '../ui/form'
 import queryString from 'query-string'
 import axios from 'axios'
-import { useModal } from '../../hooks/use-modal-store'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useModal } from '../hooks/use-modal-store'
 
 interface ChatItemProps {
   id: string
@@ -54,7 +51,7 @@ const ChatItem = ({
   socketQuery
 }: ChatItemProps) => {
   const { onOpen } = useModal()
-  const router = useRouter()
+  const navigate = useNavigate()
   const params = useParams()
   const [isEditing, setIsEditing] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -92,7 +89,7 @@ const ChatItem = ({
   }
   const onMemberClick = async () => {
     if (member.id === currentMember.id) return
-    router.push(`/servers/${params?.serverID}/conversations/${member.id}`)
+    navigate(`/servers/${params?.serverID}/conversations/${member.id}`)
   }
   const isLoading = form.formState.isSubmitting
   useEffect(() => {
@@ -134,26 +131,24 @@ const ChatItem = ({
               href={fileURL}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative mt-2 flex aspect-square h-64 w-64 items-center 
-              overflow-hidden rounded-md border bg-secondary"
+              className="bg-secondary relative mt-2 flex aspect-square h-64 w-64 items-center overflow-hidden rounded-md border"
             >
-              <Image
+              <img
                 src={fileURL}
                 alt={content}
-                fill
                 sizes="300"
                 className="object-cover"
               />
             </a>
           )}
           {isPDF && (
-            <div className="relative mt-2 flex items-center rounded-md bg-background/10 p-2">
+            <div className="bg-background/10 relative mt-2 flex items-center rounded-md p-2">
               <FileIcon className="h-10 w-10 rounded-full fill-indigo-200 stroke-emerald-400 object-cover" />
               <a
                 href={fileURL}
                 className="ml-2 text-sm text-emerald-500 hover:underline"
                 target="_blank"
-                rel="noopener roreferrer"
+                rel="noopener roreferrer noreferrer"
               >
                 PDF file
               </a>
@@ -227,8 +222,7 @@ const ChatItem = ({
                   query: socketQuery
                 })
               }
-              className="ml-auto h-4 w-4 cursor-pointer 
-              text-zinc-500 transition hover:text-zinc-600 dark:hover:text-zinc-300"
+              className="ml-auto h-4 w-4 cursor-pointer text-zinc-500 transition hover:text-zinc-600 dark:hover:text-zinc-300"
             />
           </ActionTooltip>
         </div>

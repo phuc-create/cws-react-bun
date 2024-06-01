@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ServerWithMemberWithProfile } from '../types'
+import { ServerWithMemberWithProfile } from '../../types'
 import { channel_tbl, CHANNEL_TYPE } from '@prisma/client'
 
 export type ModalType =

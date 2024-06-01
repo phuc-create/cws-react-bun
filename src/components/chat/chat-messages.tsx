@@ -1,15 +1,13 @@
-'use client'
-
 import { member_tbl, message_tbl, profile_tbl } from '@prisma/client'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { format } from 'date-fns'
 import ChatWelcome from './chat-welcome'
-import { useChatQuery } from '../../hooks/use-chat-query'
 import { Loader2, ServerCrash } from 'lucide-react'
 import ChatItem from './chat-item'
-import { useChatSocket } from '../../hooks/use-chat-socket'
 import { Button } from '../ui/button'
-import useScrollMessage from '../../hooks/use-scroll-message'
+import { useChatQuery } from '../hooks/use-chat-query'
+import { useChatSocket } from '../hooks/use-chat-socket'
+import useScrollMessage from '../hooks/use-scroll-message'
 
 interface ChatMessagesProps {
   name: string
@@ -105,7 +103,7 @@ const ChatMessages = ({
         </div>
       )}
       <div className="mt-auto flex flex-col-reverse">
-        {data?.pages.map((group, i) => {
+        {data?.pages.map((group: { items: any }, i: React.Key) => {
           return (
             <Fragment key={i}>
               {(group.items || []).map((item: MessageItem) => {

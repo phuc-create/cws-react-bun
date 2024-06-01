@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useSocket } from '../components/providers/socket-provider'
+import { useSocket } from '../providers/socket-provider'
 import { member_tbl, message_tbl, profile_tbl } from '@prisma/client'
 import { useEffect } from 'react'
 
